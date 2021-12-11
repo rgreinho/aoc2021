@@ -1,5 +1,6 @@
 use aoc2021::day01::{day01a, day01b};
 use aoc2021::day02::{day02a, day02b};
+use aoc2021::day03::{day03a, day03b};
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
@@ -9,6 +10,8 @@ fn main() {
         "day01b" => day01b(),
         "day02a" => day02a(),
         "day02b" => day02b(),
+        "day03a" => day03a(),
+        "day03b" => day03b(),
 
         _ => "We haven't solved that yet".to_string(),
     };
