@@ -67,9 +67,7 @@ fn read_input(input: &str) -> Vec<Lanternfish> {
 
 fn simulate_lanternfish(input: &[Lanternfish], days: i32) -> usize {
     let mut fishes = input.iter().copied().collect::<Vec<Lanternfish>>();
-    for day in 0..days {
-        dbg!(&day);
-        dbg!(&fishes.len());
+    for _day in 0..days {
         let mut newborns: Vec<Lanternfish> = Vec::new();
         for fish in fishes.iter_mut() {
             if let Some(f) = fish.next() {
@@ -87,16 +85,18 @@ fn memoized_simulate(
     days: usize,
 ) -> usize {
     if let Some(count) = cache.get(&(*fish, days)) {
+        eprintln!("Cache hit: {:?} -> {}", &fish, &count);
         return *count;
     }
 
-    let mut count: usize = 0;
-    for day in 0..days {
+    let mut count: usize = 1;
+    let cloned_fish = fish.clone();
+    for day in 1..=days {
         if let Some(mut f) = fish.next() {
-            count += memoized_simulate(cache, &mut f, days - day)
+            count += memoized_simulate(cache, &mut f, days - day);
         }
     }
-    cache.insert((*fish, days), count);
+    cache.insert((cloned_fish, days), count);
     count
 }
 
@@ -118,11 +118,15 @@ mod test {
         let mut fishes = read_input(RAW_INPUT);
         let mut cache: HashMap<(Lanternfish, usize), usize> = HashMap::new();
         let mut count = 0;
+        // for fish in fishes.iter_mut() {
+        //     count += memoized_simulate(&mut cache, fish, 80)
+        // }
+        // assert_eq!(count, 5934);
         for fish in fishes.iter_mut() {
-            count += memoized_simulate(&mut cache, fish, 80)
+            dbg!(&fish);
+            count += memoized_simulate(&mut cache, fish, 256)
         }
-        assert_eq!(count, 5934)
-        // assert_eq!(simulate_lanternfish(&fishes, 256), 26984457539)
+        assert_eq!(count, 26984457539)
     }
 
     #[test]
