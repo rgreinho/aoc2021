@@ -1,4 +1,5 @@
 use std::fs;
+use std::ops::Deref;
 use std::path::Path;
 use std::str::FromStr;
 
@@ -8,6 +9,7 @@ pub mod day03;
 pub mod day04;
 pub mod day05;
 pub mod day06;
+pub mod day07;
 
 pub fn read_input<P, T>(input: P) -> Vec<T>
 where
@@ -19,4 +21,33 @@ where
         .lines()
         .filter_map(|s| s.parse::<T>().ok())
         .collect::<Vec<T>>()
+}
+
+pub fn read_input_sep<P, T>(input: P, separator: &str) -> Vec<T>
+where
+    P: AsRef<Path>,
+    T: FromStr,
+{
+    let values = fs::read_to_string(input).expect("Could not load file");
+    values
+        .trim()
+        .split(separator)
+        .filter_map(|s| s.parse::<T>().ok())
+        .collect::<Vec<T>>()
+}
+
+pub fn mean(list: &[i32]) -> i32 {
+    list.iter().sum::<i32>() / (list.len() as i32)
+}
+
+pub fn median(list: &[i32]) -> i32 {
+    let mut v = list.iter().copied().collect::<Vec<i32>>();
+    v.sort();
+    let len = v.len();
+    let mid = len / 2;
+    if len % 2 == 0 {
+        return *v.get(mid + 1).unwrap();
+    } else {
+        return v[mid];
+    }
 }
