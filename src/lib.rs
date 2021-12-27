@@ -10,6 +10,7 @@ pub mod day05;
 pub mod day06;
 pub mod day07;
 pub mod day08;
+pub mod day09;
 
 pub fn read_input<P, T>(input: P) -> Vec<T>
 where
@@ -17,7 +18,14 @@ where
     T: FromStr,
 {
     let values = fs::read_to_string(input).expect("Could not load file");
-    values
+    input_from_string::<T>(&values)
+}
+
+pub fn input_from_string<T>(input: &str) -> Vec<T>
+where
+    T: FromStr,
+{
+    input
         .lines()
         .filter_map(|s| s.parse::<T>().ok())
         .collect::<Vec<T>>()
@@ -29,7 +37,14 @@ where
     T: FromStr,
 {
     let values = fs::read_to_string(input).expect("Could not load file");
-    values
+    input_sep_from_string::<T>(&values, separator)
+}
+
+pub fn input_sep_from_string<T>(input: &str, separator: &str) -> Vec<T>
+where
+    T: FromStr,
+{
+    input
         .trim()
         .split(separator)
         .filter_map(|s| s.parse::<T>().ok())
