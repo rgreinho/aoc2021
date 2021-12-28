@@ -138,7 +138,7 @@ mod test {
     }
 
     #[test]
-    fn test_day09_partb_sample() {
+    fn test_day10_partb_sample() {
         let input = read_input(RAW_INPUT);
         assert_eq!(repair_lines(&input), 288957);
     }
