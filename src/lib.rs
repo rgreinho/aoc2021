@@ -1,3 +1,4 @@
+use std::fmt;
 use std::fs;
 use std::path::Path;
 use std::str::FromStr;
@@ -14,6 +15,7 @@ pub mod day09;
 pub mod day10;
 pub mod day11;
 pub mod day12;
+pub mod day13;
 
 pub fn read_input<P, T>(input: P) -> Vec<T>
 where
@@ -67,5 +69,41 @@ pub fn median(list: &[i32]) -> i32 {
         return *v.get(mid + 1).unwrap();
     } else {
         return v[mid];
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct Point {
+    x: i32,
+    y: i32,
+}
+
+impl Point {
+    pub fn from_string(input: &str) -> Self {
+        match input.split_once(',') {
+            Some((x, y)) => Point {
+                x: x.parse::<i32>().unwrap(),
+                y: y.parse::<i32>().unwrap(),
+            },
+            None => panic!("cannot parse the string representing the point: {}", input),
+        }
+    }
+}
+
+impl From<&str> for Point {
+    fn from(item: &str) -> Self {
+        match item.split_once(',') {
+            Some((x, y)) => Point {
+                x: x.parse::<i32>().unwrap(),
+                y: y.parse::<i32>().unwrap(),
+            },
+            None => panic!("cannot parse the string representing the point: {}", item),
+        }
+    }
+}
+
+impl fmt::Display for Point {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{},{}", self.x, self.y)
     }
 }

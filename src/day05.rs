@@ -1,32 +1,9 @@
+use crate::Point;
 use core::panic;
 use std::cmp;
 use std::collections::HashMap;
 use std::fmt;
 use std::fs;
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-struct Point {
-    x: i32,
-    y: i32,
-}
-
-impl Point {
-    pub fn from_string(input: &str) -> Self {
-        match input.split_once(',') {
-            Some((x, y)) => Point {
-                x: x.parse::<i32>().unwrap(),
-                y: y.parse::<i32>().unwrap(),
-            },
-            None => panic!("cannot parse the string representing the point: {}", input),
-        }
-    }
-}
-
-impl fmt::Display for Point {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{},{}", self.x, self.y)
-    }
-}
 
 #[derive(Debug, Clone, Copy)]
 struct Line {
