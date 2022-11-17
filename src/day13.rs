@@ -1,10 +1,6 @@
 use crate::Point;
 use regex::Regex;
-use std::{
-    borrow::{Borrow, BorrowMut},
-    collections::HashSet,
-    fs,
-};
+use std::{collections::HashSet, fs};
 
 #[derive(Debug, PartialEq)]
 pub enum Axis {
